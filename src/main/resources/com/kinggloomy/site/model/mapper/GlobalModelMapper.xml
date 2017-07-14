@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kinggloomy.site.dao.GlobalModelMapper">
+    <resultMap id="BaseResultMap" type="com.kinggloomy.site.model.GlobalModel">
+        <id column="key" property="globalKey" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="image_id" property="imageId" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <resultMap id="DTOResultMap" type="com.kinggloomy.site.model.dto.GlobalDTO">
+        <id column="key" property="globalKey" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="image_id" property="imageId" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+        <association property="image" javaType="com.kinggloomy.site.model.ImageModel">
+            <id column="id" property="id" jdbcType="INTEGER"/>
+            <result column="name" property="name" jdbcType="VARCHAR"/>
+            <result column="path" property="path" jdbcType="VARCHAR"/>
+            <result column="type" property="type" jdbcType="VARCHAR" />
+            <result column="flag" property="flag" jdbcType="BIT"/>
+        </association>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from global
+    where [key] = #{globalKey,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.kinggloomy.site.model.GlobalModel" keyProperty="globalKey" >
+    insert into global ([key], title, image_id, content)
+    values (#{globalKey,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{imageId,jdbcType=INTEGER},
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.kinggloomy.site.model.GlobalModel">
+    update global
+    set [key]= #{globalKey,jdbcType=VARCHAR},
+    title = #{title,jdbcType=VARCHAR},
+      image_id = #{imageId,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where [key] = #{globalKey,jdbcType=VARCHAR}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select [key], title, image_id, content
+    from global
+    where [key] = #{globalKey,jdbcType=VARCHAR}
+  </select>
+    <select id="selectDTOByPrimaryKey" resultMap="DTOResultMap" parameterType="java.lang.String">
+        select g.[key], g.title, g.image_id, g.content,
+        i.id,i.name,i.type,i.content_type,i.path,i.upload_date,i.flag
+        from global g
+        LEFT JOIN image i
+        ON g.image_id = i.id
+        WHERE g.[key] = #{globalKey,jdbcType=VARCHAR}
+
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select [key], title, image_id, content
+    from global
+  </select>
+</mapper>

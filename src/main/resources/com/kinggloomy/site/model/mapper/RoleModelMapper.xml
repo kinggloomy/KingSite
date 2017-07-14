@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kinggloomy.site.dao.RoleModelMapper" >
+  <resultMap id="BaseResultMap" type="com.kinggloomy.site.model.RoleModel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="index" property="index" jdbcType="INTEGER" />
+    <result column="role_key" property="roleKey" jdbcType="VARCHAR" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_roles
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kinggloomy.site.model.RoleModel" useGeneratedKeys="true" keyProperty="id" >
+    insert into sys_roles ([index], role_key, role_name
+      )
+    values (#{index,jdbcType=INTEGER}, #{roleKey,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.kinggloomy.site.model.RoleModel" >
+    update sys_roles
+    set [index] = #{index,jdbcType=INTEGER},
+      role_key = #{roleKey,jdbcType=VARCHAR},
+      role_name = #{roleName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, [index], role_key, role_name
+    from sys_roles
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, [index], role_key, role_name
+    from sys_roles
+  </select>
+    <select id="findByName" resultMap="BaseResultMap">
+      select id, [index], role_key, role_name
+    from sys_roles
+   WHERE  role_name = #{name,jdbcType=VARCHAR}
+    </select>
+  <select id="findByUserCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select r.id, r.[index], r.role_key, r.role_name
+    from sys_roles r,sys_user u ,role_user ru
+    where u.user_code= #{userCode,jdbcType=VARCHAR} and ru.user_id = u.id and r.id = ru.role_id
+  </select>
+</mapper>

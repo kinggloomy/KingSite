@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+        http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+
+    <description>Object To Json</description>
+    <display-name>JSTL otj</display-name>
+    <tlib-version>0.1</tlib-version>
+    <short-name>otj</short-name>
+    <uri>http://harlanking.com/tag/otj</uri>
+    <tag>
+        <description>
+            Print a json String
+        </description>
+        <name>json</name>
+        <tag-class>com.kinggloomy.site.tag.ObjToJsonStringTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <description>
+                The Object to print
+            </description>
+            <name>value</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+            Print a json String
+        </description>
+        <name>jsvar</name>
+        <tag-class>com.kinggloomy.site.tag.ObjToJsonJSVarTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <description>
+                The Object to print
+            </description>
+            <name>value</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                The var name of js var
+            </description>
+            <name>var</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+</taglib>

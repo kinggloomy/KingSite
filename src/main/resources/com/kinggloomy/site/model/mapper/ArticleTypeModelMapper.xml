@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kinggloomy.site.dao.ArticleTypeModelMapper" >
+  <resultMap id="BaseResultMap" type="com.kinggloomy.site.model.ArticleTypeModel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="index" property="index" jdbcType="INTEGER" />
+    <result column="article_type_useable" property="articleTypeUseable" jdbcType="VARCHAR" />
+    <result column="parentType_id" property="parenttypeId" jdbcType="INTEGER" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from article_type
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kinggloomy.site.model.ArticleTypeModel" useGeneratedKeys="true" keyProperty="id" >
+    insert into article_type ([index], article_type_useable, parentType_id,
+      type_name)
+    values (#{index,jdbcType=INTEGER}, #{articleTypeUseable,jdbcType=VARCHAR}, #{parenttypeId,jdbcType=INTEGER}, 
+      #{typeName,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.kinggloomy.site.model.ArticleTypeModel" >
+    update article_type
+    set [index] = #{index,jdbcType=INTEGER},
+      article_type_useable = #{articleTypeUseable,jdbcType=VARCHAR},
+      parentType_id = #{parenttypeId,jdbcType=INTEGER},
+      type_name = #{typeName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, [index], article_type_useable, parentType_id, type_name
+    from article_type
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, [index], article_type_useable, parentType_id, type_name
+    from article_type
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap"  parameterType="java.lang.String">
+    select id, [index], article_type_useable, parentType_id, type_name
+    from article_type
+    where type_name = #{typeName,jdbcType=VARCHAR}
+  </select>
+
+
+</mapper>

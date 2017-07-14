@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kinggloomy.site.dao.ImageModelMapper" >
+  <resultMap id="BaseResultMap" type="com.kinggloomy.site.model.ImageModel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="content_type" property="contentType" jdbcType="VARCHAR" />
+    <result column="upload_date" property="uploadDate" jdbcType="TIMESTAMP"/>
+    <result column="flag" property="flag" jdbcType="BIT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from image
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kinggloomy.site.model.ImageModel" useGeneratedKeys="true" keyProperty="id" >
+    insert into image (name, path,type,content_type,upload_date, flag)
+    values (#{name,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR},#{contentType,jdbcType=VARCHAR},#{uploadDate,jdbcType=TIMESTAMP},#{flag,jdbcType=BIT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.kinggloomy.site.model.ImageModel" >
+    update image
+    set name = #{name,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=BIT},
+      type= #{type,jdbcType=VARCHAR},
+      upload_date=#{uploadDate,jdbcType=TIMESTAMP},
+      content_type=#{contentType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, name, path, type,content_type, upload_date,flag
+    from image
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, name, path,type,content_type,upload_date, flag
+    from image
+  </select>
+  <select id="selectByType" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select id, name, path,type,content_type,upload_date,flag
+    from image
+    where type = #{type,jdbcType=VARCHAR}
+    order BY upload_date DESC
+  </select>
+</mapper>
